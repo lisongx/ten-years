@@ -21,9 +21,10 @@ const Places = ({children, data}) => {
 
 export default Places
 
+// sort by field name actually
 export const query = graphql`
 {
-  allPlacesYaml {
+  allPlacesYaml(sort: {fields:[id]}) {
     edges{
       node{
         name
