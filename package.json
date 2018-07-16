@@ -5,11 +5,13 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gatsby": "next",
+    "gatsby-image": "^1.0.54",
     "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-sharp": "^1.6.48",
     "gatsby-source-filesystem": "^1.5.39",
     "gatsby-transformer-sharp": "^1.6.27",
     "gatsby-transformer-yaml": "^1.5.18",
+    "lodash": "^4.17.10",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0"

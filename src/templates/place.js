@@ -1,46 +1,56 @@
-import React from "react"
+import React from 'react'
 import { Link, graphql } from 'gatsby'
 import Layout from '../components/layout'
+import filter from 'lodash/filter'
 
-// class Gallery extends React.Component {
-//   render() {
-//     const {photos} = this.props.photos
-//     return (
-//       <div>
-//       </div>
-//     )
-//   }
-// }
+// import Img from "gatsby-image"
+
+class Gallery extends React.Component {
+  render() {
+    const {photos} = this.props.photos
+    return (
+      <div>
+      </div>
+    )
+  }
+}
 
 class PlaceTemplate extends React.Component {
 
   render() {
     const { previous, next } = this.props.pageContext
-    const { info, photos } = this.props.data
+    const { info, placePhotos } = this.props.data
+    const photos = filter(
+      placePhotos.edges, (item) => item.node.childImageSharp)
 
     return (
       <Layout>
         <div>
           <h2>{info.name}</h2>
-          <p>{info.latitude}, {info.longitude}</p>
-
-          <li>
+          {
+          photos.map(({ node }) => {
+            return (<div key={node.id}>
+              <img src={node.childImageSharp.resize.src} />
+            </div>)
+          })
+          }
+          <span>
             {
               previous &&
               <Link to={previous.slug} rel="prev">
                 ← {previous.name}
               </Link>
             }
-          </li>
+          </span>
 
-          <li>
+          <span>
             {
               next &&
               <Link to={next.slug} rel="next">
                 {next.name} →
               </Link>
             }
-          </li>
+          </span>
 
         </div>
       </Layout>
@@ -58,17 +68,23 @@ query photosByPlace($slug: String!) {
       latitude
       longitude
     }
-    photos: allFile(filter: {
+    placePhotos: allFile(sort: {fields:[name]}, filter: {
         sourceInstanceName: {eq: "photos"},
         relativeDirectory: {eq: $slug}
     }) {
       edges {
         node {
-          relativeDirectory
           name
           childImageSharp {
-            resize(width: 200, quality: 60) {
+            resize(
+                width: 500,
+                quality: 95,
+                toFormat: WEBP
+              ) {
               src
+              height
+              width
+              aspectRatio
             }
             resolutions {
               base64

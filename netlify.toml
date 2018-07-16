@@ -2,5 +2,6 @@
   ID = "64db58ad-b9c3-4639-b791-4413d0346d14"
 
 [Build]
-  Publish = ""
+  Publish = "public/"
   Functions = ""
+  Command = "yarn run build"
