@@ -82,9 +82,9 @@ sub {
 sup {
   top: -.5em;
 }
-img {
+/* img {
   border-style: none;
-}
+} */
 svg:not(:root) {
   overflow: hidden;
 }
@@ -207,7 +207,7 @@ body {
   -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
   font-feature-settings: "kern", "liga", "clig", "calt";
 }
-img {
+/* img {
   max-width: 100%;
   margin-left: 0;
   margin-right: 0;
@@ -217,7 +217,7 @@ img {
   padding-right: 0;
   padding-top: 0;
   margin-bottom: 1.45rem;
-}
+} */
 h1 {
   margin-left: 0;
   margin-right: 0;
@@ -621,4 +621,27 @@ pre tt:after {
   html {
     font-size: 100%;
   }
+}
+
+/* sticky footer */
+/* end sticky footer */
+
+
+::selection {
+  background-color: rgba(50, 95, 92, .4);
+}
+
+::-moz-selection {
+  background-color: rgba(50, 95, 92, .4);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+.image {
+  display: block;
+  margin: 0;
 }
