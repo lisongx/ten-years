@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "fast-exif": "^1.0.1",
     "gatsby": "next",
     "gatsby-image": "^1.0.54",
     "gatsby-plugin-react-helmet": "next",
@@ -15,6 +16,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",
+    "react-image-lightbox": "^5.0.0",
     "react-stack-grid": "^0.7.1"
   },
   "keywords": [
@@ -25,7 +27,8 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "netlifyctl deploy"
   },
   "devDependencies": {
     "prettier": "^1.12.0"

@@ -4,7 +4,8 @@ import Layout from '../components/layout'
 import filter from 'lodash/filter'
 
 import StackGrid from "react-stack-grid"
-// import Img from "gatsby-image"
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
 
 class Gallery extends React.Component {
 
@@ -15,11 +16,11 @@ class Gallery extends React.Component {
       <div>
           <StackGrid
             gridRef={grid => this.grid = grid}
-            columnWidth={250}
-            duration={0}
+            columnWidth={300}
+            duration={100}
             gutterWidth={30}
             gutterHeight={20}
-            appearDelay={10}
+            appearDelay={50}
           >
             {
             photos.map(({ node }) => {
@@ -29,7 +30,7 @@ class Gallery extends React.Component {
                 display: "block",
                 margin: 0}}>
                   <img
-                    src={img.src}
+                    src={img.srcWebp}
                     alt={"img"}
                     style={{
                       width: img.width,
@@ -102,7 +103,12 @@ query photosByPlace($slug: String!) {
           id
           name
           childImageSharp {
-            preview: resolutions(width: 250, quality: 95) {
+            original {
+              src
+              width
+              height
+            }
+            preview: resolutions(width: 300, quality: 97) {
               base64
               tracedSVG
               aspectRatio

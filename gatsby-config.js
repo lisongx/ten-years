@@ -19,6 +19,9 @@ module.exports = {
       options: {
         name: `photos`,
         path: `${__dirname}/photos/`,
+        plugins: [
+          `gatsby-plugin-sharp`
+        ],
       },
     }
   ],

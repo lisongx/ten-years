@@ -48,3 +48,35 @@ exports.createPages = ({ graphql, actions }) => {
         )
     })
 }
+
+// copy from
+// https://github.com/gatsbyjs/gatsby/issues/4899#issuecomment-384389758
+
+const fastExif = require('fast-exif');
+const get = require('lodash/get');
+
+exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
+  const { createNodeField } = boundActionCreators;
+
+if(node.internal.type === 'ImageSharp' && node.id.includes('content/pictures/')) {
+      const absolutePath = node.id.split(' ')[0];
+      fastExif.read(absolutePath)
+        .then((exifData) => {
+          const title        = get( exifData, [ 'image', 'ImageDescription' ], null );
+          const location     = get( exifData, [ 'image', 'DocumentName' ], null );
+          const categoryData = get( exifData, [ 'exif', 'ImageHistory' ], null );
+          const categories   = categoryData === null ? [ 'uncategorized' ] : categoryData.split( ',' );
+          const iso          = get( exifData, [ 'exif', 'ISO' ], null );
+          const model        = get( exifData, [ 'exif', 'LensModel' ], null );
+          const fstop        = get( exifData, [ 'exif', 'FNumber' ], null );
+          const focalLength  = get( exifData, [ 'exif', 'FocalLength' ], null );
+
+              createNodeField({
+                node,
+                name: 'exif',
+                value: {title, location, categories, technical: {iso, model, fstop, focalLength}}
+              });
+        })
+        .catch((err) => console.error(err));
+  }
+}
