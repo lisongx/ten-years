@@ -2,6 +2,21 @@
 const Promise = require('bluebird')
 const path = require('path')
 
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+    if (stage === "build-html") {
+      actions.setWebpackConfig({
+        module: {
+          rules: [
+            {
+              test: /react-image-lightbox/,
+              use: loaders.null(),
+            },
+          ],
+        },
+      })
+    }
+  }
+
 exports.createPages = ({ graphql, actions }) => {
     const { createPage } = actions
     return new Promise((resolve, reject) => {
