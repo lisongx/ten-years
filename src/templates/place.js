@@ -54,7 +54,7 @@ class Gallery extends React.Component {
 
     if (width < 700) {
       lightboxPadding = 5
-      columnWidth = 200
+      columnWidth = width - 100
     }
 
     return (
@@ -104,8 +104,8 @@ class Gallery extends React.Component {
                   src={img.srcWebp}
                   alt={"Click to fullscreen"}
                   style={{
-                    width: img.width,
-                    height: img.height,
+                    width: columnWidth,
+                    height: columnWidth / img.aspectRatio,
                   }}
                   />
             </figure>)
@@ -191,7 +191,7 @@ query photosByPlace($slug: String!) {
               srcSetWebp
               originalName
             }
-            preview: resolutions(width: 300, quality: 90) {
+            preview: resolutions(width: 500, quality: 90) {
               base64
               tracedSVG
               aspectRatio

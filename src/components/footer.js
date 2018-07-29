@@ -5,7 +5,7 @@ const Footer = ({ siteTitle }) => (
   <div
     className="footer"
     style={{
-      background: 'blue',
+      background: '#840808',
       marginTop: '1.45rem',
     }}
   >
