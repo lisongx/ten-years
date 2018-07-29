@@ -101,7 +101,7 @@ class Gallery extends React.Component {
                 margin: 0}}
               onClick={() => this.toggleImage(index)}>
                 <img
-                  src={img.srcWebp}
+                  src={img.src}
                   alt={"Click to fullscreen"}
                   style={{
                     width: columnWidth,
@@ -174,11 +174,6 @@ query photosByPlace($slug: String!) {
           id
           name
           childImageSharp {
-            original {
-              src
-              width
-              height
-            }
             large: resolutions(width: 1280, quality: 97) {
               base64
               tracedSVG
@@ -187,8 +182,6 @@ query photosByPlace($slug: String!) {
               height
               src
               srcSet
-              srcWebp
-              srcSetWebp
               originalName
             }
             preview: resolutions(width: 500, quality: 90) {
@@ -199,8 +192,6 @@ query photosByPlace($slug: String!) {
               height
               src
               srcSet
-              srcWebp
-              srcSetWebp
               originalName
             }
           }

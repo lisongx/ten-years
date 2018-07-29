@@ -4,4 +4,4 @@
 [Build]
   Publish = "public/"
   Functions = ""
-  Command = "yarn run build"
+  Command = ""
