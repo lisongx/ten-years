@@ -28,7 +28,7 @@
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "netlifyctl deploy"
+    "deploy": "gatsby build;netlifyctl deploy"
   },
   "devDependencies": {
     "prettier": "^1.12.0"

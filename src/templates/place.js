@@ -46,7 +46,7 @@ class Gallery extends React.Component {
   render() {
     const { photos } = this.props
     const { width, photoIndex, isOpen } = this.state
-    const orgImages = photos.map(img => img.node.childImageSharp.original.src)
+    const orgImages = photos.map(img => img.node.childImageSharp.large.src)
     // const preImages = photos.map(img => img.node.childImageSharp.preview.srcWebp)
 
     let columnWidth = 300
@@ -179,7 +179,19 @@ query photosByPlace($slug: String!) {
               width
               height
             }
-            preview: resolutions(width: 300, quality: 97) {
+            large: resolutions(width: 1280, quality: 97) {
+              base64
+              tracedSVG
+              aspectRatio
+              width
+              height
+              src
+              srcSet
+              srcWebp
+              srcSetWebp
+              originalName
+            }
+            preview: resolutions(width: 300, quality: 90) {
               base64
               tracedSVG
               aspectRatio
