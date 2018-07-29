@@ -70,8 +70,8 @@ exports.createPages = ({ graphql, actions }) => {
 const fastExif = require('fast-exif');
 const get = require('lodash/get');
 
-exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators;
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  const { createNodeField } = actions;
 
 if(node.internal.type === 'ImageSharp' && node.id.includes('content/pictures/')) {
       const absolutePath = node.id.split(' ')[0];
