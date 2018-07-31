@@ -1,29 +1,38 @@
 {
-  "name": "gatsby-starter-default",
-  "description": "Gatsby default starter",
-  "version": "1.0.0",
+  "name": "ten-years",
+  "description": "2008",
+  "version": "0.0.01",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "fast-exif": "^1.0.1",
     "gatsby": "next",
     "gatsby-image": "^1.0.54",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-offline": "next",
     "gatsby-plugin-react-helmet": "next",
+    "gatsby-plugin-sass": "next",
     "gatsby-plugin-sharp": "^1.6.48",
+    "gatsby-plugin-typography": "^1.7.19",
     "gatsby-source-filesystem": "^1.5.39",
     "gatsby-transformer-sharp": "^1.6.27",
     "gatsby-transformer-yaml": "^1.5.18",
     "lodash": "^4.17.10",
+    "micro": "latest",
+    "node-sass": "^4.9.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",
     "react-image-lightbox": "^5.0.0",
-    "react-stack-grid": "^0.7.1"
+    "react-stack-grid": "^0.7.1",
+    "react-typography": "^0.16.13",
+    "typography": "^0.16.17"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
   "scripts": {
+    "start": "micro",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",

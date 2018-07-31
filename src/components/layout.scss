@@ -624,11 +624,20 @@ pre tt:after {
 }
 
 /* sticky footer */
+.Site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.Site-content {
+  flex: 1;
+}
 /* end sticky footer */
 
 
 ::selection {
-  background-color: rgba(50, 95, 92, .4);
+  background-color: rgba(35, 136, 129, 0.4);
 }
 
 ::-moz-selection {
@@ -639,4 +648,33 @@ img {
   max-width: 100%;
   height: auto;
   vertical-align: top;
+}
+
+
+
+/* custom */
+
+$mainColor: rgb(132, 8, 8);
+$mainFont: Helvetica,Arial,sans-serif;
+
+.place-title {
+  font-family: $mainFont;
+  color: $mainColor;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 800;
+}
+
+a:active {
+  color: $mainColor;
+}
+
+a:visited {
+  color: $mainColor;
+}
+
+a:visited {
+  color: $mainColor;
 }

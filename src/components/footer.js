@@ -6,7 +6,7 @@ const Footer = ({ siteTitle }) => (
     className="footer"
     style={{
       background: '#840808',
-      marginTop: '1.45rem',
+      marginTop: '0rem',
     }}
   >
     <div

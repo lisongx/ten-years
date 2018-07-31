@@ -3,6 +3,7 @@ module.exports = {
     title: '十年一梦',
   },
   plugins: [
+    `gatsby-plugin-sass`,
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sharp',
     `gatsby-transformer-sharp`,

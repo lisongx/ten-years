@@ -58,7 +58,7 @@ class Gallery extends React.Component {
     }
 
     return (
-      <div>
+      <div style={{}}>
         {isOpen && (
           <Lightbox
             imagePadding={lightboxPadding}
@@ -117,6 +117,41 @@ class Gallery extends React.Component {
   }
 }
 
+
+class Nav extends React.Component {
+
+  render() {
+    const { previous, next } = this.props
+
+    return (
+      <div style={{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "nowrap",
+        justifyContent: "space-between",
+        margin: "10px",
+      }}>
+        <div>
+          {
+            previous &&
+            <Link to={previous.slug} rel="prev">
+              ← {previous.name}
+            </Link>
+          }
+        </div>
+        <div>
+          {
+            next &&
+            <Link to={next.slug} rel="next">
+              {next.name} →
+            </Link>
+          }
+        </div>
+      </div>
+    )
+  }
+}
+
 class PlaceTemplate extends React.Component {
 
   render() {
@@ -127,28 +162,18 @@ class PlaceTemplate extends React.Component {
 
     return (
       <Layout>
-        <div>
-          <h2>{info.name}</h2>
+        <div style={{
+            margin: '0 auto',
+            maxWidth: 1024,
+            padding: '0px 1.01875rem 1.2rem',
+            paddingTop: "1rem",
+          }}>
+          <h2 style={{textAlign: "center"}} className="place-title">{info.name}</h2>
+          <Nav previous={previous} next={next} />
           <Gallery photos={photos} />
-          <div>
-            <p>
-              {
-                previous &&
-                <Link to={previous.slug} rel="prev">
-                  ← {previous.name}
-                </Link>
-              }
-            </p>
-
-            <p>
-              {
-                next &&
-                <Link to={next.slug} rel="next">
-                  {next.name} →
-                </Link>
-              }
-            </p>
-          </div>
+          {
+            photos.length > 10 ? <Nav previous={previous} next={next} /> : null
+          }
         </div>
       </Layout>
     )
@@ -175,14 +200,12 @@ query photosByPlace($slug: String!) {
           name
           childImageSharp {
             large: resize(width: 1280, quality: 97) {
-              tracedSVG
               aspectRatio
               width
               height
               src
             }
             preview: resize(width: 500, quality: 90) {
-              tracedSVG
               aspectRatio
               width
               height
