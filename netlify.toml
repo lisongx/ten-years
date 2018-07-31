@@ -1,7 +1,6 @@
 [Settings]
-  ID = "64db58ad-b9c3-4639-b791-4413d0346d14"
+  ID = "b33e9634-97c7-4dff-9ae2-8d28b9ac7e30"
 
 [Build]
-  Publish = "public/"
+  Publish = ""
   Functions = ""
-  Command = ""

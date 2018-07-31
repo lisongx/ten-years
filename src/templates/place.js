@@ -174,25 +174,19 @@ query photosByPlace($slug: String!) {
           id
           name
           childImageSharp {
-            large: resolutions(width: 1280, quality: 97) {
-              base64
+            large: resize(width: 1280, quality: 97) {
               tracedSVG
               aspectRatio
               width
               height
               src
-              srcSet
-              originalName
             }
-            preview: resolutions(width: 500, quality: 90) {
-              base64
+            preview: resize(width: 500, quality: 90) {
               tracedSVG
               aspectRatio
               width
               height
               src
-              srcSet
-              originalName
             }
           }
         }
