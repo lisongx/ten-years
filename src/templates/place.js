@@ -2,7 +2,8 @@ import React, { Component }  from 'react'
 import { Link, graphql } from 'gatsby'
 import Layout from '../components/layout'
 import Map from '../components/map'
-import { filter, orderBy } from 'lodash'
+import { filter, orderBy, uniq, sortBy } from 'lodash'
+import Img from "gatsby-image"
 
 import moment from 'moment-timezone';
 import locale_zh from "moment/locale/zh-cn";
@@ -15,8 +16,8 @@ import 'react-image-lightbox/style.css';
 moment.locale('zh-cn', locale_zh)
 
 const formatDesc = (img) => {
-  const time = img.node.childImageSharp.fields.exif.time
-  const timeDisplay = moment.tz(time, 'Asia/Shanghai').format('YYYY年MMMMDD日')
+  const time = img.node.fields.exif.time
+  const timeDisplay = moment.tz(time, 'Asia/Shanghai').format('YYYY年MM月DD日')
   return `拍摄于${timeDisplay}`
 }
 
@@ -60,19 +61,19 @@ class Gallery extends React.Component {
     let photos = this.props.photos
     const { width, photoIndex, isOpen } = this.state
 
-        // sort all photos
-    photos = orderBy(photos, [(img) => img.node.childImageSharp.fields.exif.time])
-
+    // sort all photos
+    photos = orderBy(photos, [(img) => img.node.fields.exif.time])
     const orgImages = photos.map(img => img.node.childImageSharp.large.src)
     const preImages = photos.map(img => img.node.childImageSharp.preview.src)
-    const dates = photos.map(img => img.node.childImageSharp.fields.exif.time)
 
+    let oneCol = false
     let columnWidth = 300
     let lightboxPadding = 50
     let gutterWidth = 40
     let gutterHeight = 30
 
     if (width < 700) {
+      oneCol = true
       lightboxPadding = 10
       gutterHeight = 15
       columnWidth = width
@@ -116,20 +117,24 @@ class Gallery extends React.Component {
           {
           photos.map(({ node }, index) => {
             const img = node.childImageSharp.preview
+            const aspect = img.height / img.width
             return (<figure
               key={img.src}
               style={{
                 display: "block",
                 margin: 0}}
               onClick={() => this.toggleImage(index)}>
-                <img
-                  src={img.src}
-                  alt={"Click to fullscreen"}
-                  style={{
+
+                <Img fixed={img} imgStyle={{
                     width: columnWidth,
-                    height: columnWidth / img.aspectRatio,
-                  }}
-                  />
+                    height: columnWidth * aspect,
+                }} style={{
+                  // marginBottom: oneCol ? 0 : random(0, 50),
+                  width: columnWidth,
+                  height: columnWidth * aspect,
+                }}
+                   alt={"Click to fullscreen"}
+                />
             </figure>)
           })
           }
@@ -180,7 +185,6 @@ class Nav extends React.Component {
   }
 }
 
-
 class PlaceTemplate extends React.Component {
 
   render() {
@@ -189,13 +193,22 @@ class PlaceTemplate extends React.Component {
     const photos = filter(
       placePhotos.edges, (item) => item.node.childImageSharp)
 
+    const dates = sortBy(uniq(
+      photos.filter(
+        img => img.node.fields.exif.time
+      ).map(
+        img => img.node.fields.exif.time.substring(0, 10)
+      )
+    )).map( d => moment(d))
+
+    console.log(dates)
+
     return (
       <Layout>
           {/* empty locaition data */}
           {
             info.longitude ?  <Map {...info}/> : null
           }
-
         <div style={{
             margin: '0 auto',
             maxWidth: 1024,
@@ -204,6 +217,18 @@ class PlaceTemplate extends React.Component {
           }}>
 
           <h2 style={{textAlign: "center"}} className="place-title">{info.name}</h2>
+          <div style={{
+          }}>
+            <p>拍摄于以下日期：
+
+            {
+              dates.map((d, index) => {
+                return <span style={{marginLeft: "10px"}} key={`date-${index}`}>{d.format('YYYY年MM月DD日')}</span>
+              })
+            }
+            </p>
+          </div>
+
           <Nav previous={previous} next={next} />
 
           <Gallery photos={photos} />
@@ -226,7 +251,7 @@ query photosByPlace($slug: String!) {
       latitude
       longitude
     }
-    placePhotos: allFile(sort: {fields:[name]}, filter: {
+    placePhotos: allFile(sort: {fields:[dir]}, filter: {
         sourceInstanceName: {eq: "photos"},
         relativeDirectory: {eq: $slug}
     }) {
@@ -234,19 +259,16 @@ query photosByPlace($slug: String!) {
         node {
           id
           name
+          fields {
+            exif {
+              time
+            }
+          }
           childImageSharp {
-            fields {
-              exif {
-                time
-              }
+            preview: fixed(width: 450, quality: 85, toFormat: WEBP){
+              ...GatsbyImageSharpFixed
             }
-            large: resize(width: 1280, quality: 97) {
-              aspectRatio
-              width
-              height
-              src
-            }
-            preview: resize(width: 500, quality: 90) {
+            large: resize(width: 1280, quality: 92) {
               aspectRatio
               width
               height

@@ -6,14 +6,14 @@ const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,
 
 const pinStyle = {
   cursor: 'pointer',
-  fill: '#d00',
-  stroke: 'none'
+  fill: 'rgb(255, 255, 255)',
+  stroke: '10'
 };
 
 export default class CityPin extends PureComponent {
 
   render() {
-    const {size = 14, onClick} = this.props;
+    const {size = 20, onClick} = this.props;
 
     return (
       <svg height={size} viewBox='0 0 24 24'

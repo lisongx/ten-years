@@ -665,6 +665,9 @@ $mainColor: rgb(132, 58, 58);
 .ril-caption-content {
   font-family: $mainFont;
 }
+p, span {
+  font-family: $mainFont;
+}
 
 .Site {
   background-color: #f7f5e8;

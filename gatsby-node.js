@@ -72,12 +72,14 @@ const get = require('lodash/get');
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
+  console.log(node)
 
-if(node.internal.type === 'ImageSharp') {
-      const absolutePath = node.id.split(' ')[0];
+if(node.internal.mediaType === 'image/jpeg') {
+      const absolutePath = node.absolutePath;
       fastExif.read(absolutePath)
         .then((exifData) => {
 
+        console.log('exit', exifData)
           const title        = get( exifData, [ 'image', 'ImageDescription' ], null );
           const location     = get( exifData, [ 'image', 'DocumentName' ], null );
           const categoryData = get( exifData, [ 'exif', 'ImageHistory' ], null );

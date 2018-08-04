@@ -35,29 +35,30 @@ class Map extends Component {
       })
     }
 
-    _renderMarker = () => {
+    _renderMarker = (longitude, latitude) => {
         return (
           <Marker key={`place-1`}
-            longitude={this.state.longitude}
-            latitude={this.state.latitude} >
-            <Pin size={14} />
+            longitude={longitude}
+            latitude={latitude} >
+            <Pin size={22} />
           </Marker>
         );
       }
 
     render() {
-      const { latitude, longitude } = this.state
+      const { latitude, longitude } = this.props
       return (
         <MapGL
           width={this.state.width}
           latitude={latitude}
           longitude={longitude}
-          mapStyle={'mapbox://styles/seansay/cjketqiiq03hk2smymln8p0c0'}
+          attributionControl={false}
+          mapStyle={'mapbox://styles/seansay/cjkf85foy0p4a2rojj3aivlss'}
           {...this.state.viewport}
           mapboxApiAccessToken={process.env.GATSBY_MAPBOX_TOKEN}
           onViewportChange={(viewport) => this.setState({viewport})}
         >
-            { this._renderMarker() }
+            { this._renderMarker(longitude, latitude) }
         </MapGL>
       );
     }
