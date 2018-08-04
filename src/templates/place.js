@@ -1,11 +1,24 @@
 import React, { Component }  from 'react'
 import { Link, graphql } from 'gatsby'
 import Layout from '../components/layout'
-import {filter} from 'lodash'
+import Map from '../components/map'
+import { filter, orderBy } from 'lodash'
 
+import moment from 'moment-timezone';
+import locale_zh from "moment/locale/zh-cn";
 import StackGrid from 'react-stack-grid'
 import Lightbox from 'react-image-lightbox';
+
 import 'react-image-lightbox/style.css';
+
+
+moment.locale('zh-cn', locale_zh)
+
+const formatDesc = (img) => {
+  const time = img.node.childImageSharp.fields.exif.time
+  const timeDisplay = moment.tz(time, 'Asia/Shanghai').format('YYYY年MMMMDD日')
+  return `拍摄于${timeDisplay}`
+}
 
 class Gallery extends React.Component {
 
@@ -44,17 +57,25 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { photos } = this.props
+    let photos = this.props.photos
     const { width, photoIndex, isOpen } = this.state
+
+        // sort all photos
+    photos = orderBy(photos, [(img) => img.node.childImageSharp.fields.exif.time])
+
     const orgImages = photos.map(img => img.node.childImageSharp.large.src)
-    // const preImages = photos.map(img => img.node.childImageSharp.preview.srcWebp)
+    const preImages = photos.map(img => img.node.childImageSharp.preview.src)
+    const dates = photos.map(img => img.node.childImageSharp.fields.exif.time)
 
     let columnWidth = 300
     let lightboxPadding = 50
+    let gutterWidth = 40
+    let gutterHeight = 30
 
     if (width < 700) {
-      lightboxPadding = 5
-      columnWidth = width - 100
+      lightboxPadding = 10
+      gutterHeight = 15
+      columnWidth = width
     }
 
     return (
@@ -63,12 +84,13 @@ class Gallery extends React.Component {
           <Lightbox
             imagePadding={lightboxPadding}
             enableZoom={false}
+            imageCaption={formatDesc(photos[photoIndex])}
             mainSrc={orgImages[photoIndex]}
             nextSrc={orgImages[(photoIndex + 1) % orgImages.length]}
             prevSrc={orgImages[(photoIndex + orgImages.length - 1) % orgImages.length]}
-            // mainSrcThumbnail={preImages[photoIndex]}
-            // nextSrcThumbnail={preImages[(photoIndex + 1) % orgImages.length]}
-            // prevSrcThumbnail={preImages[(photoIndex + orgImages.length - 1) % orgImages.length]}
+            mainSrcThumbnail={preImages[photoIndex]}
+            nextSrcThumbnail={preImages[(photoIndex + 1) % orgImages.length]}
+            prevSrcThumbnail={preImages[(photoIndex + orgImages.length - 1) % orgImages.length]}
             onCloseRequest={() => this.setState({ isOpen: false })}
             onMovePrevRequest={() =>
               this.setState({
@@ -87,8 +109,8 @@ class Gallery extends React.Component {
           gridRef={grid => this.grid = grid}
           columnWidth={columnWidth}
           duration={100}
-          gutterWidth={30}
-          gutterHeight={20}
+          gutterWidth={gutterWidth}
+          gutterHeight={gutterHeight}
           appearDelay={50}
         >
           {
@@ -133,17 +155,23 @@ class Nav extends React.Component {
       }}>
         <div>
           {
-            previous &&
+            previous?
             <Link to={previous.slug} rel="prev">
               ← {previous.name}
+            </Link>:
+            <Link to='/' rel="prev">
+              ← 首页
             </Link>
           }
         </div>
         <div>
           {
-            next &&
+            next?
             <Link to={next.slug} rel="next">
               {next.name} →
+            </Link>:
+            <Link to='/end' rel="next">
+            结语 →
             </Link>
           }
         </div>
@@ -151,6 +179,7 @@ class Nav extends React.Component {
     )
   }
 }
+
 
 class PlaceTemplate extends React.Component {
 
@@ -162,17 +191,24 @@ class PlaceTemplate extends React.Component {
 
     return (
       <Layout>
+          {/* empty locaition data */}
+          {
+            info.longitude ?  <Map {...info}/> : null
+          }
+
         <div style={{
             margin: '0 auto',
             maxWidth: 1024,
-            padding: '0px 1.01875rem 1.2rem',
+            padding: '0px 0 1.2rem',
             paddingTop: "1rem",
           }}>
+
           <h2 style={{textAlign: "center"}} className="place-title">{info.name}</h2>
           <Nav previous={previous} next={next} />
+
           <Gallery photos={photos} />
           {
-            photos.length > 10 ? <Nav previous={previous} next={next} /> : null
+            photos.length >= 10 ? <Nav previous={previous} next={next} /> : null
           }
         </div>
       </Layout>
@@ -199,6 +235,11 @@ query photosByPlace($slug: String!) {
           id
           name
           childImageSharp {
+            fields {
+              exif {
+                time
+              }
+            }
             large: resize(width: 1280, quality: 97) {
               aspectRatio
               width

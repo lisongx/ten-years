@@ -17,7 +17,7 @@ const Places = ({children, data}) => {
        <Link to={firstPlace.node.slug}>
         <div style={{
           width: '100%',
-          height: window.innerHeight - 50,
+          minHeight: 1024,
           background: `url(${indexPhoto}) no-repeat center center fixed`,
           backgroundSize: 'cover',
         }}>

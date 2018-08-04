@@ -1,6 +1,7 @@
 #emacs
 *~
 
+.env.*
 # Project dependencies
 .cache
 node_modules

@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Exo:400,800');
+
+$mainFont: "Exo", Georgia, "Times New Roman", Times, serif;
+
 html {
-  font-family: sans-serif;
+  font-family: $mainFont;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -652,10 +656,19 @@ img {
 
 
 
+// rgb(132, 8, 8);
 /* custom */
 
-$mainColor: rgb(132, 8, 8);
-$mainFont: Helvetica,Arial,sans-serif;
+
+$mainColor: rgb(132, 58, 58);
+
+.ril-caption-content {
+  font-family: $mainFont;
+}
+
+.Site {
+  background-color: #f7f5e8;
+}
 
 .place-title {
   font-family: $mainFont;
@@ -663,15 +676,13 @@ $mainFont: Helvetica,Arial,sans-serif;
 }
 
 a {
+  font-family: $mainFont;
+  color: $mainColor;
   text-decoration: none;
-  font-weight: 800;
+  font-weight: 400;
 }
 
 a:active {
-  color: $mainColor;
-}
-
-a:visited {
   color: $mainColor;
 }
 

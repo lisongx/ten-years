@@ -73,10 +73,11 @@ const get = require('lodash/get');
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
 
-if(node.internal.type === 'ImageSharp' && node.id.includes('content/pictures/')) {
+if(node.internal.type === 'ImageSharp') {
       const absolutePath = node.id.split(' ')[0];
       fastExif.read(absolutePath)
         .then((exifData) => {
+
           const title        = get( exifData, [ 'image', 'ImageDescription' ], null );
           const location     = get( exifData, [ 'image', 'DocumentName' ], null );
           const categoryData = get( exifData, [ 'exif', 'ImageHistory' ], null );
@@ -85,12 +86,16 @@ if(node.internal.type === 'ImageSharp' && node.id.includes('content/pictures/'))
           const model        = get( exifData, [ 'exif', 'LensModel' ], null );
           const fstop        = get( exifData, [ 'exif', 'FNumber' ], null );
           const focalLength  = get( exifData, [ 'exif', 'FocalLength' ], null );
+          const time = get(exifData, ['exif', 'DateTimeOriginal'], null) ||
+            get(exifData, ['time', 'ModifyDate'], null)
 
-              createNodeField({
-                node,
-                name: 'exif',
-                value: {title, location, categories, technical: {iso, model, fstop, focalLength}}
-              });
+            createNodeField({
+            node,
+            name: 'exif',
+            value: {
+                title, location, categories, time,
+                technical: {iso, model, fstop, focalLength}}
+            });
         })
         .catch((err) => console.error(err));
   }
