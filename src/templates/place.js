@@ -201,8 +201,6 @@ class PlaceTemplate extends React.Component {
       )
     )).map( d => moment(d))
 
-    console.log(dates)
-
     return (
       <Layout>
           {/* empty locaition data */}

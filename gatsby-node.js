@@ -79,7 +79,6 @@ if(node.internal.mediaType === 'image/jpeg') {
       fastExif.read(absolutePath)
         .then((exifData) => {
 
-        console.log('exit', exifData)
           const title        = get( exifData, [ 'image', 'ImageDescription' ], null );
           const location     = get( exifData, [ 'image', 'DocumentName' ], null );
           const categoryData = get( exifData, [ 'exif', 'ImageHistory' ], null );
