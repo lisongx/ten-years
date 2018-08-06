@@ -53,15 +53,15 @@ exports.createPages = ({ graphql, actions }) => {
                 const previous = isFirst ? null : places[index - 1].node;
                 const next = isLast ? null : places[index + 1].node;
 
-                createPage({
-                    path: `${edge.node.slug}`,
-                    component: placeTemplate,
-                    context: {
-                        slug: edge.node.slug,
-                        previous,
-                        next,
-                    },
-                })
+                // createPage({
+                //     path: `${edge.node.slug}`,
+                //     component: placeTemplate,
+                //     context: {
+                //         slug: edge.node.slug,
+                //         previous,
+                //         next,
+                //     },
+                // })
             })
             return
         })
