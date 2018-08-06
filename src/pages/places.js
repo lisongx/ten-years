@@ -33,7 +33,7 @@ class PlaceApp extends React.Component {
     const allPlaces = data.allPlacesYaml.edges.map(d => d.node)
     const previous = index === 0? null: allPlaces[index - 1]
     const info = allPlaces[index]
-    const next = index === allPlaces.length - 1 ? null: allPlaces[index + 1]
+    const next = index === allPlaces.length - 1 ?  null: allPlaces[index + 1]
     let photos = this.photos[info.slug]
 
     photos = filter(
