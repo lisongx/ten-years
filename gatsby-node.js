@@ -1,10 +1,15 @@
-
+const webpack = require('webpack')
 const Promise = require('bluebird')
 const path = require('path')
 
 exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
     if (stage === "build-html") {
       actions.setWebpackConfig({
+        plugins: [
+            new webpack.optimize.LimitChunkCountPlugin({
+              maxChunks: 1
+            })
+        ],
         module: {
           rules: [
             {

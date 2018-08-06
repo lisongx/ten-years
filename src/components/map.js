@@ -53,10 +53,11 @@ class Map extends Component {
           latitude={latitude}
           longitude={longitude}
           attributionControl={false}
-          mapStyle={'mapbox://styles/seansay/cjkf85foy0p4a2rojj3aivlss'}
+          mapStyle={'mapbox://styles/seansay/cj513ftq00zox2spb19esuz9r'}
           {...this.state.viewport}
           mapboxApiAccessToken={process.env.GATSBY_MAPBOX_TOKEN}
-          onViewportChange={(viewport) => this.setState({viewport})}
+        //   disable dragging
+        //   onViewportChange={(viewport) => this.setState({viewport})}
         >
             { this._renderMarker(longitude, latitude) }
         </MapGL>

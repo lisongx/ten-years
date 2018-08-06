@@ -8,6 +8,7 @@
     "fast-exif": "^1.0.1",
     "gatsby": "next",
     "gatsby-image": "next",
+    "gatsby-plugin-create-client-paths": "next",
     "gatsby-plugin-google-analytics": "next",
     "gatsby-plugin-offline": "next",
     "gatsby-plugin-react-helmet": "next",
