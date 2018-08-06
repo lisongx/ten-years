@@ -18,7 +18,7 @@ class PlaceApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 3,
+      index: 0,
     };
     this.photos = cleanPhotos(props.data.allPlacePhotos)
   }
