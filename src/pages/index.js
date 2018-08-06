@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
+import Img from "gatsby-image"
 
 import Layout from '../components/layout'
 
@@ -44,7 +45,7 @@ export const query = graphql`
 {
   indexPhoto: file(sourceInstanceName: {eq: "photos"}, name: {eq: "index"}) {
     childImageSharp {
-      image: resize(width: 1400, quality: 90) {
+      image: resize(width: 1200, quality: 90) {
         aspectRatio
         width
         height
@@ -52,10 +53,11 @@ export const query = graphql`
       }
     }
   }
-  allPlacesYaml(sort: {fields:[id]}) {
+  allPlacesYaml(sort: {fields:[index]}) {
     edges{
       node{
         name
+        index
         slug
         longitude
         latitude

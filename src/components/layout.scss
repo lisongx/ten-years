@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Exo:400,800');
 
-$mainFont: "Exo", Georgia, "Times New Roman", Times, serif;
+$mainFont: "Helvetica Neue", "Helvetica", "Arial","PingFang SC","Hiragino Sans GB", "Microsoft YaHei","WenQuanYi Micro Hei", sans-serif, Georgia, "Times New Roman", Times, serif;
 
 html {
   font-family: $mainFont;
@@ -670,7 +669,7 @@ p, span {
 }
 
 .Site {
-  background-color: #f7f5e8;
+  background-color: white;
 }
 
 .place-title {

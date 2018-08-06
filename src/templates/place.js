@@ -263,10 +263,10 @@ query photosByPlace($slug: String!) {
             }
           }
           childImageSharp {
-            preview: fixed(width: 450, quality: 85, toFormat: WEBP){
-              ...GatsbyImageSharpFixed
+            preview: fixed(width: 400, quality: 80){
+              ...GatsbyImageSharpFixed_withWebp
             }
-            large: resize(width: 1280, quality: 92) {
+            large: resize(width: 1280, quality: 90) {
               aspectRatio
               width
               height

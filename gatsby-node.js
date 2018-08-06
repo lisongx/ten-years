@@ -24,7 +24,7 @@ exports.createPages = ({ graphql, actions }) => {
         resolve(
         graphql(`
             {
-                allPlacesYaml(sort: {fields:[id]}) {
+                allPlacesYaml(sort: {fields:[index]}) {
                     edges{
                         node{
                             name
@@ -72,7 +72,6 @@ const get = require('lodash/get');
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
-  console.log(node)
 
 if(node.internal.mediaType === 'image/jpeg') {
       const absolutePath = node.absolutePath;
