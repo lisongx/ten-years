@@ -18,7 +18,7 @@ class PlaceApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 2,
+      index: 0,
     };
     this.photos = cleanPhotos(props.data.allPlacePhotos)
   }
@@ -56,12 +56,10 @@ class PlaceApp extends React.Component {
       }}
     />
 
-    console.log('current state', index)
-
     return (<Layout>
       <div>
         {
-          info.longitude ?  <Map {...info}/> : null
+          info.longitude ? <Map {...info}/> : null
         }
 
         <div style={{
@@ -73,16 +71,19 @@ class PlaceApp extends React.Component {
 
           <h2 style={{textAlign: "center"}} className="place-title">{info.name}</h2>
 
-          <div className={"shoot-info"}>
-            <p>拍摄于以下日期:</p>
-            <p>
-            {
-              dates.map((d, index) => {
-                return <span className={"shoot-date"} key={`date-${index}`}>{d.format('YYYY年MM月DD日')}</span>
-              })
-            }
-            </p>
-          </div>
+          {
+            dates.length > 0 ?
+            <div className={"shoot-info"}>
+              <p>拍摄于以下日期:</p>
+              <p>
+              {
+                dates.map((d, index) => {
+                  return <span className={"shoot-date"} key={`date-${index}`}>{d.format('YYYY年MM月DD日')}</span>
+                })
+              }
+              </p>
+            </div> : null
+          }
 
             {nav}
 

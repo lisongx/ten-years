@@ -13,7 +13,7 @@ class Map extends Component {
         latitude: this.props.latitude,
         viewport: {
           isDragging: false,
-          height: 300,
+          height: 230,
           zoom: 13,
         }
       };
@@ -40,7 +40,7 @@ class Map extends Component {
           <Marker key={`place-1`}
             longitude={longitude}
             latitude={latitude} >
-            <Pin size={22} />
+            <Pin size={24} />
           </Marker>
         );
       }
