@@ -53,7 +53,7 @@ class Map extends Component {
           latitude={latitude}
           longitude={longitude}
           attributionControl={false}
-          mapStyle={'mapbox://styles/seansay/cj513ftq00zox2spb19esuz9r'}
+          mapStyle={'mapbox://styles/seansay/cjkhype7i352a2so5shgtgjb3'}
           {...this.state.viewport}
           mapboxApiAccessToken={process.env.GATSBY_MAPBOX_TOKEN}
         //   disable dragging

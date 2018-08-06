@@ -18,7 +18,7 @@ class PlaceApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 0,
+      index: 3,
     };
     this.photos = cleanPhotos(props.data.allPlacePhotos)
   }
@@ -41,7 +41,7 @@ class PlaceApp extends React.Component {
 
     const dates = sortBy(uniq(
       photos.filter(
-        img => img.node.fields.exif.time
+        img => img.node.fields && img.node.fields.exif.time
       ).map(
         img => img.node.fields.exif.time.substring(0, 10)
       )

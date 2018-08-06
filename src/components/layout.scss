@@ -660,7 +660,7 @@ img {
 /* custom */
 
 
-$mainColor: rgb(132, 58, 58);
+$mainColor: rgb(87, 58, 58);
 
 .ril-caption-content {
   font-family: $mainFont;
@@ -693,6 +693,9 @@ a:visited {
   color: $mainColor;
 }
 
+body {
+  // border: 10px solid rgb(242, 211, 211);
+}
 
 div.shoot-info {
   margin-left: 10px;
@@ -712,4 +715,9 @@ div.shoot-info {
     font-size: 13px;
     cursor: pointer;
   }
+}
+
+.footer {
+  padding: 50px 0px;
+  background-color: $mainColor;
 }
