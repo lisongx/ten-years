@@ -3,65 +3,28 @@ import Layout from '../components/layout'
 import Map from '../components/map'
 import { Link, graphql } from 'gatsby'
 import { groupBy } from 'lodash'
-import { filter, orderBy, uniq, sortBy } from 'lodash'
+import { filter, has, uniq, sortBy } from 'lodash'
 
 import moment from 'moment-timezone';
 
-import Place, { Gallery } from '../components/place'
+import Place, { Gallery, Nav } from '../components/place'
 
 const cleanPhotos = (photos) => {
   const edges = photos.edges
   return groupBy(edges, (d) => d.node.slug)
 }
 
-class Nav extends React.Component {
-
-  render() {
-    const { previous, next } = this.props
-
-    return (
-      <div style={{
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "nowrap",
-        justifyContent: "space-between",
-        margin: "10px",
-      }}>
-        <div>
-          {
-            previous?
-            <Link to={`/${previous.slug}`} rel="prev">
-              ← {previous.name}
-            </Link>:
-            <Link to='/' rel="prev">
-              ← 首页
-            </Link>
-          }
-        </div>
-        <div>
-          {
-            next?
-            <Link to={`${next.slug}`} rel="next">
-              {next.name} →
-            </Link>:
-            <Link to='/end' rel="next">
-            结语 →
-            </Link>
-          }
-        </div>
-      </div>
-    )
-  }
-}
-
-
 class PlaceApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 0,
+      index: 2,
     };
     this.photos = cleanPhotos(props.data.allPlacePhotos)
+  }
+
+  updateIndex(index) {
+    this.setState({index: index})
   }
 
   render() {
@@ -71,7 +34,11 @@ class PlaceApp extends React.Component {
     const previous = index === 0? null: allPlaces[index - 1]
     const info = allPlaces[index]
     const next = index === allPlaces.length - 1 ? null: allPlaces[index + 1]
-    const photos = this.photos[info.slug]
+    let photos = this.photos[info.slug]
+
+    photos = filter(
+      photos, (item) => item.node.childImageSharp)
+
     const dates = sortBy(uniq(
       photos.filter(
         img => img.node.fields.exif.time
@@ -80,11 +47,22 @@ class PlaceApp extends React.Component {
       )
     )).map( d => moment(d))
 
+    const nav = <Nav previous={previous} next={next}
+      onClickNext={()=> {
+        this.updateIndex(index + 1)
+      }}
+      onClickPrevious={() => {
+        this.updateIndex(index - 1)
+      }}
+    />
+
+    console.log('current state', index)
+
     return (<Layout>
       <div>
-          {
-            info.longitude ?  <Map {...info}/> : null
-          }
+        {
+          info.longitude ?  <Map {...info}/> : null
+        }
 
         <div style={{
             margin: '0 auto',
@@ -95,23 +73,22 @@ class PlaceApp extends React.Component {
 
           <h2 style={{textAlign: "center"}} className="place-title">{info.name}</h2>
 
-          <div style={{
-          }}>
-            <p>拍摄于以下日期：
-
+          <div className={"shoot-info"}>
+            <p>拍摄于以下日期:</p>
+            <p>
             {
               dates.map((d, index) => {
-                return <span style={{marginLeft: "10px"}} key={`date-${index}`}>{d.format('YYYY年MM月DD日')}</span>
+                return <span className={"shoot-date"} key={`date-${index}`}>{d.format('YYYY年MM月DD日')}</span>
               })
             }
             </p>
           </div>
 
-          <Nav previous={previous} next={next} />
+            {nav}
 
           <Gallery photos={photos} />
           {
-            photos.length >= 10 ? <Nav previous={previous} next={next} /> : null
+            photos.length >= 10 ? nav: null
           }
         </div>
       </div>

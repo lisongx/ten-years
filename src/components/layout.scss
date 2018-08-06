@@ -692,3 +692,23 @@ a:active {
 a:visited {
   color: $mainColor;
 }
+
+
+div.shoot-info {
+  margin-left: 10px;
+}
+
+.shoot-date {
+  background-color: $mainColor;
+  display: inline-block;
+  color: white;
+  margin-left: 10px;
+  padding: 1px 5px;
+}
+
+.nav {
+  a {
+    font-size: 13px;
+    cursor: pointer;
+  }
+}

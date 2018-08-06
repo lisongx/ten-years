@@ -44,7 +44,7 @@ query photosByPlace($slug: String!) {
             preview: fixed(width: 400, quality: 80){
               ...GatsbyImageSharpFixed_withWebp
             }
-            large: resize(width: 1280, quality: 90) {
+            large: resize(width: 1280, quality: 90, toFormat:WEBP) {
               aspectRatio
               width
               height

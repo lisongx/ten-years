@@ -60,12 +60,12 @@ class Gallery extends React.Component {
     const { width, photoIndex, isOpen } = this.state
 
     // sort all photos
-    photos = orderBy(photos, [(img) => img.node.fields.exif.time])
+    photos = orderBy(photos, [(img) => img.node.name])
     const orgImages = photos.map(img => img.node.childImageSharp.large.src)
     const preImages = photos.map(img => img.node.childImageSharp.preview.src)
 
     let oneCol = false
-    let columnWidth = 300
+    let columnWidth = 480
     let lightboxPadding = 50
     let gutterWidth = 40
     let gutterHeight = 30
@@ -145,12 +145,31 @@ class Gallery extends React.Component {
 
 
 class Nav extends React.Component {
+  prevBtn() {
+    const previous = this.props.previous
+    if (previous) {
+      return this.props.onClickPrevious ?
+      <a onClick={() => this.props.onClickPrevious()}> ← {previous.name}</a>:
+      <Link to={`/${previous.slug}`} rel="prev"> ← {previous.name}</Link>
+    } else {
+      return <Link to='/' rel="prev">← 首页</Link>
+    }
+  }
+
+  nextBtn() {
+    const next = this.props.next
+    if (next) {
+      return this.props.onClickNext ?
+      <a onClick={() => this.props.onClickNext()}>{next.name} →</a>:
+      <Link to={`/${next.slug}`} rel="prev">{next.name}  →</Link>
+    } else {
+      return <Link to='/end' rel="next">结语</Link>
+    }
+  }
 
   render() {
-    const { previous, next } = this.props
-
     return (
-      <div style={{
+      <div className="nav" style={{
         display: "flex",
         flexDirection: "row",
         flexWrap: "nowrap",
@@ -158,25 +177,14 @@ class Nav extends React.Component {
         margin: "10px",
       }}>
         <div>
+
           {
-            previous?
-            <Link to={`/${previous.slug}`} rel="prev">
-              ← {previous.name}
-            </Link>:
-            <Link to='/' rel="prev">
-              ← 首页
-            </Link>
+            this.prevBtn()
           }
         </div>
         <div>
           {
-            next?
-            <Link to={`${next.slug}`} rel="next">
-              {next.name} →
-            </Link>:
-            <Link to='/end' rel="next">
-            结语 →
-            </Link>
+            this.nextBtn()
           }
         </div>
       </div>
@@ -187,9 +195,6 @@ class Nav extends React.Component {
 class Place extends React.Component {
 
   render() {
-    // const { previous, next } = this.props.pageContext
-    // const { info, placePhotos } = this.props.data
-
     const { previous, next, info } = this.props
 
     let photos = this.props.photos
@@ -219,13 +224,13 @@ class Place extends React.Component {
           }}>
 
           <h2 style={{textAlign: "center"}} className="place-title">{info.name}</h2>
-          <div style={{
-          }}>
-            <p>拍摄于以下日期：
 
+          <div style={{
+          }} className={"shoot-info"}>
+            <p>拍摄于以下日期：
             {
               dates.map((d, index) => {
-                return <span style={{marginLeft: "10px"}} key={`date-${index}`}>{d.format('YYYY年MM月DD日')}</span>
+                return <span className={"shoot-date"} key={`date-${index}`}>{d.format('YYYY年MM月DD日')}</span>
               })
             }
             </p>
@@ -245,4 +250,4 @@ class Place extends React.Component {
 
 export default Place
 
-export {Gallery}
+export {Gallery, Nav}

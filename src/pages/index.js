@@ -15,7 +15,7 @@ const Places = ({children, data}) => {
         padding: '0',
         marginBottom: 0,
       }}>
-       <Link to={firstPlace.node.slug}>
+       <Link to={'/places'}>
         <div style={{
           width: '100%',
           minHeight: 1024,
