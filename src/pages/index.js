@@ -43,7 +43,10 @@ export default Places
 // sort by field name actually
 export const query = graphql`
 {
-  indexPhoto: file(sourceInstanceName: {eq: "photos"}, name: {eq: "index"}) {
+  indexPhoto: file(
+    sourceInstanceName: {eq: "photos"}, name: {eq: "index"},
+    extension: {eq: "jpg"}
+  ) {
     childImageSharp {
       image: resize(width: 1200, quality: 90) {
         aspectRatio

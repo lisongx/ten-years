@@ -3,7 +3,7 @@ import { Howl }  from "howler"
 class Player {
     constructor() {
         this.players = {}
-        this.fadeDuration = 1000
+        this.fadeDuration = 5000
     }
 
     _play(sound) {

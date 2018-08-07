@@ -3,11 +3,12 @@ import Layout from '../components/layout'
 import Map from '../components/map'
 import { Link, graphql } from 'gatsby'
 import { groupBy } from 'lodash'
-import { filter, has, uniq, sortBy, sample} from 'lodash'
+import { filter, uniq, sortBy, sample} from 'lodash'
 import player from '../components/player'
 
 import moment from 'moment-timezone';
 
+import AudioControl from '../components/audio-control'
 import Place, { Gallery, Nav, getImgTime } from '../components/place'
 
 const cleanPhotos = (photos) => {
@@ -95,6 +96,8 @@ class PlaceApp extends React.Component {
 
     return (<Layout>
       <div>
+        <AudioControl></AudioControl>
+
         {
           info.longitude ? <Map {...info}/> : null
         }
