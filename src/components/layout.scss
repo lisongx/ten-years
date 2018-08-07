@@ -1,9 +1,8 @@
-
-$mainFont: Helvetica, Tahoma, 'Spectral','Georgia','Times New Roman','Times',serif, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
+$main-font: Helvetica, Tahoma, 'Spectral','Georgia','Times New Roman','Times',serif, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
 
 
 html {
-  font-family: $mainFont;
+  font-family: $main-font;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -660,13 +659,15 @@ img {
 /* custom */
 
 
-$mainColor: rgb(87, 58, 58);
+$main-color: #343744;
+$break-vertical: 700;
+
 
 .ril-caption-content {
-  font-family: $mainFont;
+  font-family: $main-font;
 }
 p, span {
-  font-family: $mainFont;
+  font-family: $main-font;
 }
 
 .Site {
@@ -674,23 +675,23 @@ p, span {
 }
 
 .place-title {
-  font-family: $mainFont;
-  color: $mainColor;
+  font-family: $main-font;
+  color: $main-color;
 }
 
 a {
-  font-family: $mainFont;
-  color: $mainColor;
+  font-family: $main-font;
+  color: $main-color;
   text-decoration: none;
   font-weight: 400;
 }
 
 a:active {
-  color: $mainColor;
+  color: $main-color;
 }
 
 a:visited {
-  color: $mainColor;
+  color: $main-color;
 }
 
 body {
@@ -702,12 +703,13 @@ div.shoot-info {
 }
 
 .shoot-date {
-  background-color: $mainColor;
+  background-color: $main-color;
   display: inline-block;
   color: white;
   margin-left: 10px;
   padding: 1px 4px;
   font-size: 14px;
+  margin-bottom: 4px;
 }
 
 .nav {
@@ -719,5 +721,12 @@ div.shoot-info {
 
 .footer {
   padding: 50px 0px;
-  background-color: $mainColor;
+  background-color: $main-color;
+
+  h1 {
+    font-size: 30px;
+    @media screen and (max-width: $break-vertical) {
+      font-size: 20px;
+    }
+  }
 }

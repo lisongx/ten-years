@@ -79,29 +79,32 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
 
 if(node.internal.mediaType === 'image/jpeg') {
-      const absolutePath = node.absolutePath;
-      fastExif.read(absolutePath)
-        .then((exifData) => {
+    const absolutePath = node.absolutePath;
+    fastExif.read(absolutePath)
+    .then((exifData) => {
 
-          const title        = get( exifData, [ 'image', 'ImageDescription' ], null );
-          const location     = get( exifData, [ 'image', 'DocumentName' ], null );
-          const categoryData = get( exifData, [ 'exif', 'ImageHistory' ], null );
-          const categories   = categoryData === null ? [ 'uncategorized' ] : categoryData.split( ',' );
-          const iso          = get( exifData, [ 'exif', 'ISO' ], null );
-          const model        = get( exifData, [ 'exif', 'LensModel' ], null );
-          const fstop        = get( exifData, [ 'exif', 'FNumber' ], null );
-          const focalLength  = get( exifData, [ 'exif', 'FocalLength' ], null );
-          const time = get(exifData, ['exif', 'DateTimeOriginal'], null) ||
+        console.log(absolutePath, exifData)
+        const title        = get( exifData, [ 'image', 'ImageDescription' ], null );
+        const location     = get( exifData, [ 'image', 'DocumentName' ], null );
+        const categoryData = get( exifData, [ 'exif', 'ImageHistory' ], null );
+        const categories   = categoryData === null ? [ 'uncategorized' ] : categoryData.split( ',' );
+        const iso          = get( exifData, [ 'exif', 'ISO' ], null );
+        const model        = get( exifData, [ 'exif', 'LensModel' ], null );
+        const fstop        = get( exifData, [ 'exif', 'FNumber' ], null );
+        const focalLength  = get( exifData, [ 'exif', 'FocalLength' ], null );
+        const time = get(exifData, ['exif', 'DateTimeOriginal'], null) ||
             get(exifData, ['time', 'ModifyDate'], null)
+        const phoneModel = get(exifData, ['image', 'Model'], null)
+        const phoneMaker = get(exifData, ['image', 'Make'], null)
 
-            createNodeField({
+        createNodeField({
             node,
             name: 'exif',
             value: {
-                title, location, categories, time,
-                technical: {iso, model, fstop, focalLength}}
+                title, location, categories, time, phoneModel, phoneMaker,
+                technical: {iso, model, fstop, focalLength,}}
             });
         })
-        .catch((err) => console.error(err));
+    .catch((err) => console.error(err));
   }
 }

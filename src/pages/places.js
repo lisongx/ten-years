@@ -3,14 +3,20 @@ import Layout from '../components/layout'
 import Map from '../components/map'
 import { Link, graphql } from 'gatsby'
 import { groupBy } from 'lodash'
-import { filter, has, uniq, sortBy } from 'lodash'
+import { filter, has, uniq, sortBy, sample} from 'lodash'
+import player from '../components/player'
 
 import moment from 'moment-timezone';
 
-import Place, { Gallery, Nav } from '../components/place'
+import Place, { Gallery, Nav, getImgTime } from '../components/place'
 
 const cleanPhotos = (photos) => {
   const edges = photos.edges
+  return groupBy(edges, (d) => d.node.slug)
+}
+
+const cleanAudio = (audio) => {
+  const edges = audio.edges
   return groupBy(edges, (d) => d.node.slug)
 }
 
@@ -21,19 +27,50 @@ class PlaceApp extends React.Component {
       index: 0,
     };
     this.photos = cleanPhotos(props.data.allPlacePhotos)
+    this.audios = cleanAudio(props.data.allPlaceAudio)
+    this.allPlaces = props.data.allPlacesYaml.edges.map(d => d.node)
+    this.players = {}
+  }
+
+  getAudioByIndex(index) {
+    const slug = this.allPlaces[index].slug
+    const audioFile = this.audios[slug]
+    const url = audioFile? sample(audioFile).node.url : null;
+    return { slug, url }
   }
 
   updateIndex(index) {
+    const oldInfo = this.getAudioByIndex(this.state.index)
+    const newInfo = this.getAudioByIndex(index)
+
     this.setState({index: index})
+
+    if (!newInfo.url) {
+      return
+    }
+
+    player.fadeIn(newInfo)
+
+    if (oldInfo.url) {
+      player.fadeOut(oldInfo)
+    }
+  }
+
+  componentDidMount() {
+    const info = this.getAudioByIndex(this.state.index)
+    player.fadeIn(info)
+  }
+
+  componentWillUnmount() {
+
   }
 
   render() {
     const data = this.props.data
     const index = this.state.index
-    const allPlaces = data.allPlacesYaml.edges.map(d => d.node)
-    const previous = index === 0? null: allPlaces[index - 1]
-    const info = allPlaces[index]
-    const next = index === allPlaces.length - 1 ?  null: allPlaces[index + 1]
+    const previous = index === 0? null: this.allPlaces[index - 1]
+    const info = this.allPlaces[index]
+    const next = index === this.allPlaces.length - 1 ?  null: this.allPlaces[index + 1]
     let photos = this.photos[info.slug]
 
     photos = filter(
@@ -41,11 +78,11 @@ class PlaceApp extends React.Component {
 
     const dates = sortBy(uniq(
       photos.filter(
-        img => img.node.fields && img.node.fields.exif.time
+        img => getImgTime(img)
       ).map(
-        img => img.node.fields.exif.time.substring(0, 10)
+        img => getImgTime(img).substring(0, 10)
       )
-    )).map( d => moment(d))
+    )).map(d => moment(d))
 
     const nav = <Nav previous={previous} next={next}
       onClickNext={()=> {
@@ -105,7 +142,11 @@ export default PlaceApp
 // sort by field name actually
 export const query = graphql`
 {
-  indexPhoto: file(sourceInstanceName: {eq: "photos"}, name: {eq: "index"}) {
+  indexPhoto: file(
+      sourceInstanceName: {eq: "photos"},
+      name: {eq: "index"},
+      extension: {eq: "jpg"}
+    ) {
     childImageSharp {
       image: resize(width: 1200, quality: 90) {
         aspectRatio
@@ -114,6 +155,13 @@ export const query = graphql`
         src
       }
     }
+  }
+  indexAudio: file(
+    sourceInstanceName: {eq: "photos"},
+    name: {eq: "index"},
+    extension: {eq: "mp3"}
+  ) {
+    url: publicURL
   }
   allPlacesYaml(sort: {fields:[index]}) {
     edges{
@@ -126,32 +174,50 @@ export const query = graphql`
       }
     }
   }
-    allPlacePhotos: allFile(sort: {fields:[dir]}, filter: {
-      sourceInstanceName: {eq: "photos"},
-    }) {
-      edges {
-        node {
-          id
-          name
-          slug: relativeDirectory
-          fields {
-            exif {
-              time
-            }
+  allPlacePhotos: allFile(sort: {fields:[dir]}, filter: {
+    sourceInstanceName: {eq: "photos"},
+    extension: {eq:"jpg"}
+  }) {
+    edges {
+      node {
+        id
+        name
+        birthTime
+        slug: relativeDirectory
+        fields {
+          exif {
+            phoneModel
+            phoneMaker
+            time
           }
-          childImageSharp {
-            preview: fixed(width: 400, quality: 80){
-              ...GatsbyImageSharpFixed_withWebp
-            }
-            large: resize(width: 1280, quality: 90, toFormat: WEBP) {
-              aspectRatio
-              width
-              height
-              src
-            }
+        }
+        childImageSharp {
+          preview: fixed(width: 400, quality: 80){
+            ...GatsbyImageSharpFixed_withWebp
+          }
+          large: resize(width: 1280, quality: 90, toFormat: WEBP) {
+            aspectRatio
+            width
+            height
+            src
           }
         }
       }
     }
+  }
+  allPlaceAudio: allFile(sort: {fields:[dir]}, filter: {
+    sourceInstanceName: {eq: "photos"},
+    extension: {eq:"mp3"}
+  }) {
+    edges {
+      node {
+        id
+        name
+        birthTime
+        slug: relativeDirectory
+        url: publicURL
+      }
+    }
+  }
 }
 `

@@ -13,10 +13,23 @@ import 'react-image-lightbox/style.css';
 
 moment.locale('zh-cn', locale_zh)
 
+const getImgTime = (img) => {
+   const fields = img.node.field
+   if (fields) {
+     return fields.exif.time
+   } else {
+    return img.node.birthTime
+   }
+}
+
 const formatDesc = (img) => {
-  const time = img.node.fields.exif.time
+  const model = img.node.fields.exif.phoneModel
+  const time = getImgTime(img)
   const timeDisplay = moment.tz(time, 'Asia/Shanghai').format('YYYY年MM月DD日')
-  return `拍摄于${timeDisplay}`
+  const useDevice = model? <span>使用<u>{model}</u></span>: ''
+  return (<span>
+    {timeDisplay}{useDevice}拍摄
+  </span>)
 }
 
 class Gallery extends React.Component {
@@ -72,13 +85,13 @@ class Gallery extends React.Component {
 
     if (width < 700) {
       oneCol = true
-      lightboxPadding = 10
+      lightboxPadding = 0
       gutterHeight = 15
       columnWidth = width
     }
 
     return (
-      <div style={{minHeight: 300}}>
+      <div style={{minHeight: 400}}>
         {isOpen && (
           <Lightbox
             imagePadding={lightboxPadding}
@@ -107,7 +120,7 @@ class Gallery extends React.Component {
         <StackGrid
           gridRef={grid => this.grid = grid}
           columnWidth={columnWidth}
-          duration={0}
+          duration={100}
           gutterWidth={gutterWidth}
           gutterHeight={gutterHeight}
           appearDelay={10}
@@ -250,4 +263,4 @@ class Place extends React.Component {
 
 export default Place
 
-export {Gallery, Nav}
+export {Gallery, Nav, getImgTime}

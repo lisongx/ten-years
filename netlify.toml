@@ -2,5 +2,5 @@
   ID = "b33e9634-97c7-4dff-9ae2-8d28b9ac7e30"
 
 [Build]
-  Publish = ""
+  Publish = "public"
   Functions = ""
