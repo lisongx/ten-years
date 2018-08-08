@@ -3,7 +3,7 @@ import { Router, Link, Location } from "@reach/router"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 import Places from "./places"
 import Front from "./front"
-import End from "../components/end"
+import End from "./end"
 
 import "./main.css"
 
