@@ -1,23 +1,18 @@
 import React from "react"
-import { MemoryRouter as Router, Route, Link, Location } from "react-router-dom"
+import { Route, Link, Location } from "react-router-dom"
+import { MemoryRouter as Router} from 'react-router'
 import Places from "./places"
 import Front from "./front"
 import End from "./end"
 import NotFound from "./404"
 import { withRouter} from 'react-router'
-import createBrowserHistory from 'history/createBrowserHistory'
+import { createMemoryHistory } from 'history'
 
 import "./main.css"
 
-const history = createBrowserHistory()
-
-history.listen((location, action) => {
-  window.scrollTo(0, 0);
-});
-
 const App = () => (
   <div>
-    <Router history={history}>
+    <Router>
       <div>
           <Route exact path="/" component={Front}/>
           <Route path="/places" component={Places} />

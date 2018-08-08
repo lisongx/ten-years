@@ -1,6 +1,6 @@
 import React from 'react'
-// import { Link } from 'gatsby'
-import { Link } from "@reach/router"
+// import { Link, push } from 'gatsby'
+import { Link } from "react-router-dom"
 import Map from './map'
 import { filter, orderBy, uniq, sortBy } from 'lodash'
 import Img from "gatsby-image"
@@ -174,9 +174,9 @@ class Nav extends React.Component {
     if (next) {
       return this.props.onClickNext ?
       <a onClick={() => this.props.onClickNext()}>{next.name} →</a>:
-      <Link to={`/${next.slug}`} rel="prev">{next.name}  →</Link>
+      <Link to={`/${next.slug}`} rel="prev">{next.name} →</Link>
     } else {
-      return <Link to='/end' rel="next">结语  →</Link>
+      return <Link to='/end' rel="next">结语 →</Link>
     }
   }
 
@@ -190,7 +190,6 @@ class Nav extends React.Component {
         margin: "10px",
       }}>
         <div>
-
           {
             this.prevBtn()
           }
@@ -238,8 +237,11 @@ class Place extends React.Component {
 
           <h2 style={{textAlign: "center"}} className="place-title">{info.name}</h2>
 
+          <Nav previous={previous} next={next} />
+
           <div style={{
           }} className={"shoot-info"}>
+
             <p>拍摄于以下日期：
             {
               dates.map((d, index) => {
@@ -249,12 +251,11 @@ class Place extends React.Component {
             </p>
           </div>
 
-          <Nav previous={previous} next={next} />
 
           <Gallery photos={photos} />
-          {
-            photos.length > 3 ? <Nav previous={previous} next={next} /> : null
-          }
+
+          <Nav previous={previous} next={next} />
+
         </div>
       </div>
     )

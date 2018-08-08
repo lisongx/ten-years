@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import { Link, navigate } from "@reach/router"
+import { Link } from 'react-router-dom'
 import { StaticQuery } from "gatsby"
 import BasicLayout from '../components/basic_layout'
 
@@ -16,9 +16,7 @@ const Article = () => {
 
 const Enter = () => {
   return (<div className="enter">
-    <a id="enter-button" onClick={ () => {
-      navigate(`/places`);
-    }}>点击继续</a>
+      <Link to={"/places"} id="enter-button">点击继续</Link>
   </div>)
 }
 
@@ -34,19 +32,15 @@ const Desktop = ({children, data}) => {
             <img src={indexPhoto} />
           </div>
 
-        <div class="left-half" style={{
-          cursor: 'pointer',
+        <div className="left-half" style={{
           backgroundImage: `url(${indexPhoto})`,
           backgroundSize: 'cover',
-        }} onClick={ () => {
-          navigate(`/places`);
         }}>
         </div>
 
-        <div class="right-half">
+        <div className="right-half">
           <Article/>
           <Enter/>
-          {/* <Link to={'/places'}>进入</Link> */}
         </div>
       </section>
     </BasicLayout>
@@ -59,9 +53,7 @@ const Mobile = ({children, data}) => {
     <BasicLayout>
       <section className="mobile-front-container" style={{
         cursor: 'pointer',
-      }} onClick={ () => {
-          navigate(`/places`);
-        }}>
+      }}>
         <div style={{
           minHeight: 700,
           paddingTop: "20px",
@@ -79,7 +71,6 @@ const Mobile = ({children, data}) => {
             <Article/>
             <Enter/>
           </div>
-          {/* <Link to={'/places'}>进入</Link> */}
         </div>
       </section>
     </BasicLayout>

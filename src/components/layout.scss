@@ -703,9 +703,9 @@ div.shoot-info {
 }
 
 .shoot-date {
-  background-color: $main-color;
+  // background-color: $main-color;
   display: inline-block;
-  color: white;
+  color: $main-color;
   margin-left: 10px;
   padding: 1px 4px;
   font-size: 14px;
