@@ -4,6 +4,7 @@
   "version": "0.0.01",
   "author": "Li Song <iseansay@gmail.com>",
   "dependencies": {
+    "@reach/router": "^1.1.1",
     "dotenv": "^6.0.0",
     "fast-exif": "^1.0.1",
     "gatsby": "next",
@@ -32,6 +33,7 @@
     "react-helmet": "^5.2.0",
     "react-image-lightbox": "^5.0.0",
     "react-map-gl": "^3.3.2",
+    "react-router-dom": "^4.3.1",
     "react-stack-grid": "^0.7.1",
     "react-typography": "^0.16.13",
     "typography": "^0.16.17"

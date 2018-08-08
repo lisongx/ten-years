@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../components/layout'
 import Map from '../components/map'
-import { Link, graphql } from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
 import { groupBy } from 'lodash'
 import { filter, uniq, sortBy, sample} from 'lodash'
 import player from '../components/player'
@@ -9,7 +9,7 @@ import player from '../components/player'
 import moment from 'moment-timezone';
 
 import AudioControl from '../components/audio-control'
-import Place, { Gallery, Nav, getImgTime } from '../components/place'
+import { Gallery, Nav, getImgTime } from '../components/place'
 
 const cleanPhotos = (photos) => {
   const edges = photos.edges
@@ -25,7 +25,7 @@ class PlaceApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 0,
+      index: this.props.index || 0,
     };
     this.photos = cleanPhotos(props.data.allPlacePhotos)
     this.audios = cleanAudio(props.data.allPlaceAudio)
@@ -63,11 +63,9 @@ class PlaceApp extends React.Component {
   }
 
   componentWillUnmount() {
-
   }
 
   render() {
-    const data = this.props.data
     const index = this.state.index
     const previous = index === 0? null: this.allPlaces[index - 1]
     const info = this.allPlaces[index]
@@ -140,65 +138,104 @@ class PlaceApp extends React.Component {
 }
 
 
-export default PlaceApp
+// export default PlaceApp
 
-// sort by field name actually
-export const query = graphql`
-{
-  indexPhoto: file(
-      sourceInstanceName: {eq: "photos"},
-      name: {eq: "index"},
-      extension: {eq: "jpg"}
-    ) {
-    childImageSharp {
-      image: resize(width: 1200, quality: 90) {
-        aspectRatio
-        width
-        height
-        src
-      }
-    }
-  }
-  indexAudio: file(
-    sourceInstanceName: {eq: "photos"},
-    name: {eq: "index"},
-    extension: {eq: "mp3"}
-  ) {
-    url: publicURL
-  }
-  allPlacesYaml(sort: {fields:[index]}) {
-    edges{
-      node{
-        name
-        index
-        slug
-        longitude
-        latitude
-      }
-    }
-  }
-  allPlacePhotos: allFile(sort: {fields:[dir]}, filter: {
-    sourceInstanceName: {eq: "photos"},
-    extension: {eq:"jpg"}
-  }) {
-    edges {
-      node {
-        id
-        name
-        birthTime
-        slug: relativeDirectory
-        fields {
-          exif {
-            phoneModel
-            phoneMaker
-            time
-          }
-        }
+// // sort by field name actually
+// export const query = graphql`
+// {
+//   indexPhoto: file(
+//       sourceInstanceName: {eq: "photos"},
+//       name: {eq: "index"},
+//       extension: {eq: "jpg"}
+//     ) {
+//     childImageSharp {
+//       image: resize(width: 1200, quality: 90) {
+//         aspectRatio
+//         width
+//         height
+//         src
+//       }
+//     }
+//   }
+//   indexAudio: file(
+//     sourceInstanceName: {eq: "photos"},
+//     name: {eq: "index"},
+//     extension: {eq: "mp3"}
+//   ) {
+//     url: publicURL
+//   }
+//   allPlacesYaml(sort: {fields:[index]}) {
+//     edges{
+//       node{
+//         name
+//         index
+//         slug
+//         longitude
+//         latitude
+//       }
+//     }
+//   }
+//   allPlacePhotos: allFile(sort: {fields:[dir]}, filter: {
+//     sourceInstanceName: {eq: "photos"},
+//     extension: {eq:"jpg"}
+//   }) {
+//     edges {
+//       node {
+//         id
+//         name
+//         birthTime
+//         slug: relativeDirectory
+//         fields {
+//           exif {
+//             phoneModel
+//             phoneMaker
+//             time
+//           }
+//         }
+//         childImageSharp {
+//           preview: fixed(width: 400, quality: 80){
+//             ...GatsbyImageSharpFixed_withWebp
+//           }
+//           large: resize(width: 1280, quality: 90, toFormat: WEBP) {
+//             aspectRatio
+//             width
+//             height
+//             src
+//           }
+//         }
+//       }
+//     }
+//   }
+//   allPlaceAudio: allFile(sort: {fields:[dir]}, filter: {
+//     sourceInstanceName: {eq: "photos"},
+//     extension: {eq:"mp3"}
+//   }) {
+//     edges {
+//       node {
+//         id
+//         name
+//         birthTime
+//         slug: relativeDirectory
+//         url: publicURL
+//       }
+//     }
+//   }
+// }
+// `
+
+
+// export default Places
+export default props => (
+  <StaticQuery
+    query={graphql`
+    {
+      indexPhoto: file(
+          sourceInstanceName: {eq: "photos"},
+          name: {eq: "index"},
+          extension: {eq: "jpg"}
+        ) {
         childImageSharp {
-          preview: fixed(width: 400, quality: 80){
-            ...GatsbyImageSharpFixed_withWebp
-          }
-          large: resize(width: 1280, quality: 90, toFormat: WEBP) {
+          image: resize(width: 1200, quality: 90) {
             aspectRatio
             width
             height
@@ -206,21 +243,71 @@ export const query = graphql`
           }
         }
       }
-    }
-  }
-  allPlaceAudio: allFile(sort: {fields:[dir]}, filter: {
-    sourceInstanceName: {eq: "photos"},
-    extension: {eq:"mp3"}
-  }) {
-    edges {
-      node {
-        id
-        name
-        birthTime
-        slug: relativeDirectory
+      indexAudio: file(
+        sourceInstanceName: {eq: "photos"},
+        name: {eq: "index"},
+        extension: {eq: "mp3"}
+      ) {
         url: publicURL
       }
+      allPlacesYaml(sort: {fields:[index]}) {
+        edges{
+          node{
+            name
+            index
+            slug
+            longitude
+            latitude
+          }
+        }
+      }
+      allPlacePhotos: allFile(sort: {fields:[dir]}, filter: {
+        sourceInstanceName: {eq: "photos"},
+        extension: {eq:"jpg"}
+      }) {
+        edges {
+          node {
+            id
+            name
+            birthTime
+            slug: relativeDirectory
+            fields {
+              exif {
+                phoneModel
+                phoneMaker
+                time
+              }
+            }
+            childImageSharp {
+              preview: fixed(width: 400, quality: 80){
+                ...GatsbyImageSharpFixed_withWebp
+              }
+              large: resize(width: 1280, quality: 90, toFormat: WEBP) {
+                aspectRatio
+                width
+                height
+                src
+              }
+            }
+          }
+        }
+      }
+      allPlaceAudio: allFile(sort: {fields:[dir]}, filter: {
+        sourceInstanceName: {eq: "photos"},
+        extension: {eq:"mp3"}
+      }) {
+        edges {
+          node {
+            id
+            name
+            birthTime
+            slug: relativeDirectory
+            url: publicURL
+          }
+        }
+      }
     }
-  }
-}
-`
+    `}
+    render={data => <PlaceApp data={data} {...props} />}
+  />
+)

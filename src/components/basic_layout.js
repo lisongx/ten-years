@@ -6,10 +6,10 @@ import { StaticQuery, graphql } from "gatsby"
 import Footer from './footer'
 import './layout.scss'
 
-const Layout = ({ children, data }) => (
+const BasicLayout = ({ children, data }) => (
   <StaticQuery
     query={graphql`
-      query SiteTitleQuery {
+      query BrandSiteTitleQuery {
         site {
           siteMetadata {
             title
@@ -23,28 +23,13 @@ const Layout = ({ children, data }) => (
           title={data.site.siteMetadata.title}
           meta={[
             { name: 'description', content: '..' },
-            { name: 'keywords', content: 'Beijing 2008' },
+            { name: 'keywords', content: 'beijing 2008' },
           ]}
         />
-        {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
-        <section
-          className="Site-content"
-          style={{
-          }}
-        >
-          <div>
-            {children}
-          </div>
-        </section>
-        <Footer siteTitle={data.site.siteMetadata.title} />
+        {children}
       </div>
     )}
   />
 )
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
-
-export default Layout
-
+export default BasicLayout

@@ -29,10 +29,6 @@ module.exports = {
         ],
       },
     },
-    {
-      resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/app/*`] },
-    },
     // This plugin sets up Google Analytics for you.
     {
       resolve: `gatsby-plugin-google-analytics`,

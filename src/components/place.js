@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'gatsby'
+// import { Link } from 'gatsby'
+import { Link } from "@reach/router"
 import Map from './map'
 import { filter, orderBy, uniq, sortBy } from 'lodash'
 import Img from "gatsby-image"
@@ -156,7 +157,6 @@ class Gallery extends React.Component {
   }
 }
 
-
 class Nav extends React.Component {
   prevBtn() {
     const previous = this.props.previous
@@ -176,7 +176,7 @@ class Nav extends React.Component {
       <a onClick={() => this.props.onClickNext()}>{next.name} →</a>:
       <Link to={`/${next.slug}`} rel="prev">{next.name}  →</Link>
     } else {
-      return <Link to='/end' rel="next">结语</Link>
+      return <Link to='/end' rel="next">结语  →</Link>
     }
   }
 

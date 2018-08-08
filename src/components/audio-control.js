@@ -8,7 +8,7 @@ import 'rc-slider/assets/index.css';
 class AudioControl extends React.Component {
   constructor(props) {
     super(props);
-    this.defaultVol = 0.7
+    this.defaultVol = 0.8
     this.state = {
       vol: this.defaultVol
     }
