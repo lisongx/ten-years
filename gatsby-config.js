@@ -5,6 +5,7 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: '十年一梦 2008 - 2018',
+    desc: '不要留恋梦，会醒不过来的',
   },
   plugins: [
     `gatsby-plugin-sass`,

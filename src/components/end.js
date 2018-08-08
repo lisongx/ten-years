@@ -1,5 +1,6 @@
 import React from 'react'
-import Layout from '../components/layout'
+import Layout from './layout'
+import { Link } from "react-router-dom"
 
 const EndPage = () => (
   <Layout>
@@ -19,6 +20,8 @@ const EndPage = () => (
          <li>感谢：马莎/drunkdoggy</li>
          <li><a style={{textDecoration: "underline"}} href="mailto:iseansay+2008@gmail.com">联系我们</a></li>
        </ul>
+
+      <Link to={"/"}>回到首页</Link>
     </div>
 
   </Layout>

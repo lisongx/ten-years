@@ -1,15 +1,15 @@
 import React from 'react'
-import Layout from '../components/layout'
-import Map from '../components/map'
+import Layout from './layout'
+import Map from './map'
 import { graphql, StaticQuery } from 'gatsby'
 import { groupBy } from 'lodash'
 import { filter, uniq, sortBy, sample} from 'lodash'
-import player from '../components/player'
+import player from './player'
 
 import moment from 'moment-timezone';
 
-import AudioControl from '../components/audio-control'
-import { Gallery, Nav, getImgTime } from '../components/place'
+import AudioControl from './audio-control'
+import { Gallery, Nav, getImgTime } from './place'
 
 const cleanPhotos = (photos) => {
   const edges = photos.edges
