@@ -3,7 +3,7 @@ import { Howl }  from "howler"
 class Player {
     constructor() {
         this.players = {}
-        this.fadeDuration = 5000
+        this.fadeDuration = 3000
     }
 
     _play(sound) {
@@ -25,18 +25,13 @@ class Player {
                 volume: 0,
                 autoplay: true,
             });
-            console.log('fade in play', slug, url)
             this._play(this.players[slug])
         }
     }
 
     fadeOut({slug, url}) {
         const sound = this.players[slug]
-        if (!url) {
-            return
-        }
         if (sound && sound.playing() && sound.volume() > 0) {
-            console.log('fade out', slug, url)
             sound.fade(1, 0, this.fadeDuration)
         } else {
         }

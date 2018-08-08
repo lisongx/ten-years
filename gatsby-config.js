@@ -33,6 +33,13 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/app/*`] },
     },
+    // This plugin sets up Google Analytics for you.
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: `UA-123558680-1`,
+      },
+    },
     {
       resolve: `gatsby-plugin-favicon`,
       options: {
