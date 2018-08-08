@@ -253,7 +253,7 @@ class Place extends React.Component {
 
           <Gallery photos={photos} />
           {
-            photos.length > 1 ? <Nav previous={previous} next={next} /> : null
+            photos.length > 3 ? <Nav previous={previous} next={next} /> : null
           }
         </div>
       </div>

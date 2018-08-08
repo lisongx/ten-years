@@ -27,6 +27,13 @@ const Desktop = ({children, data}) => {
   return (
     <BasicLayout>
       <section className="front-container">
+          <div style={{
+              width: "0px",
+              height: "0px",
+          }}>
+            <img src={indexPhoto} />
+          </div>
+
         <div class="left-half" style={{
           cursor: 'pointer',
           backgroundImage: `url(${indexPhoto})`,

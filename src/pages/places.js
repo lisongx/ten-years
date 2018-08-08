@@ -45,6 +45,7 @@ class PlaceApp extends React.Component {
     const newInfo = this.getAudioByIndex(index)
 
     this.setState({index: index})
+    window.scrollTo(0, 0);
 
     if (!newInfo.url) {
       return
