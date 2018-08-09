@@ -158,6 +158,7 @@ class Gallery extends React.Component {
 }
 
 class Nav extends React.Component {
+
   prevBtn() {
     const previous = this.props.previous
     if (previous) {
@@ -237,7 +238,7 @@ class Place extends React.Component {
 
           <h2 style={{textAlign: "center"}} className="place-title">{info.name}</h2>
 
-          <Nav previous={previous} next={next} />
+          {/* <Nav previous={previous} next={next} /> */}
 
           <div style={{
           }} className={"shoot-info"}>
@@ -251,11 +252,8 @@ class Place extends React.Component {
             </p>
           </div>
 
-
           <Gallery photos={photos} />
-
           <Nav previous={previous} next={next} />
-
         </div>
       </div>
     )

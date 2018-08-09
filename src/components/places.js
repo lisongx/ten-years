@@ -127,9 +127,7 @@ class PlaceApp extends React.Component {
             {nav}
 
           <Gallery photos={photos} />
-          {
-            photos.length >= 10 ? nav: null
-          }
+           {nav}
         </div>
       </div>
 
