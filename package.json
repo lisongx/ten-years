@@ -21,7 +21,7 @@
     "gatsby-transformer-sharp": "next",
     "gatsby-transformer-yaml": "next",
     "howler": "^2.0.14",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.13",
     "mapbox-gl": "^0.47.0",
     "micro": "latest",
     "moment": "^2.22.2",
