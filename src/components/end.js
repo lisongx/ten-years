@@ -18,7 +18,7 @@ const EndPage = () => (
          <li>摄影：冯秋实/李松/billy</li>
          <li>录音：李松</li>
          <li>感谢：马莎/drunkdoggy</li>
-         <li><a style={{textDecoration: "underline"}} href="mailto:iseansay+2008@gmail.com">联系我们</a></li>
+         <li><a style={{textDecoration: "underline"}} href="mailto:lisong+2008@notimportant.org">联系我们</a></li>
        </ul>
 
       <Link to={"/"}>回到首页</Link>

@@ -24,6 +24,11 @@ class Player {
                 src: [url],
                 volume: 0,
                 autoplay: true,
+                onplayerror: function() {
+                    this.players[slug]('unlock', function() {
+                        this.players[slug].play();
+                    });
+                }
             });
             this._play(this.players[slug])
         }
