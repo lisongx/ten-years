@@ -71,9 +71,8 @@ const Mobile = ({children, data}) => {
           backgroundSize: 'cover',
         }}>
           <div style={{
-            // margin: "40px 50px",
             padding: "20px 10px 40px",
-            background: "rgba(255, 255, 255, 0.5)",
+            background: "rgba(255, 255, 255, 0.8)",
           }}>
             <Article/>
             <Enter/>
